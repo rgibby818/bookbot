@@ -1,9 +1,5 @@
-# Function that returns an integer value of the word count of its input.
-def count_words(words):
-    word_array = words.split()
-    word_count = len(word_array)
-    return word_count
-
+import sys
+from stats import count_words
 # Function that returns a sorted dictionary (greatest->least) with each character in the input string
 # and the amount of times it was counted inside that string.
 def count_characters(words):
@@ -27,15 +23,21 @@ def count_characters(words):
     return sorted_dict
 
 def main():
-    argument = "books/frankenstein.txt"
+    if len(sys.argv) != 2 :
+        print("Usage: python3 main.py <path_to_book>")
+        sys.exit(1)
+
+    argument = sys.argv[1] 
     with open(argument) as f:
         file_contents = f.read()
         word_count = count_words(file_contents)
         characters = count_characters(file_contents)
-        print(f"-- Begin report of {argument} ---")
-        print(f"{word_count} words found in the document")
-        print()
+        print("============ BOOKBOT ============")
+        print(f"Analyzing book found at {argument} ---")
+        print("----------- Word Count ----------")
+        print(f"Found {word_count} total words")
+        print("--------- Character Count -------")
         for key,value in characters.items():
-            print(f"The letter \'{key}\' character was found {value} times")
+            print(f"{key}: {value}")
         print("--- End report ---")
 main()
